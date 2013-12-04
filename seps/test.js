@@ -3,7 +3,8 @@ var wcardn = 'wlp3s0';
 
 var spawn = require('child_process').spawn,
     netlist = spawn('iwlist',[wcardn,'s']);
-    //netlist = spawn('iwlist', ['wlp3s0', 's']);
+    fs = require('fs'),
+    util = require('util')
 
 
 netlist.stdout.on('data', function (data) {
@@ -44,7 +45,7 @@ netlist.stdout.on('data', function (data) {
     //var vname = myarr[i].slice(7,-1);
     //
     /* connect using
-     * MAKE SURE NETWORKING IS OFF AND NETWORK MANAGER IS OFF
+     * MAKE SURE NETWORKING IS OFF AND NETWORK MANAGER IS OFF, also need to be root
      * if (WPA) {
      * wpa_passphrase ESSID password > wpa.conf
      * wpa_supplicant -iwlan0 -c./wpa.conf -Dwext
@@ -57,9 +58,15 @@ netlist.stdout.on('data', function (data) {
      * }
      * */
     }
+    var jsonarr = [];
     for (i=0; i<myi+1; i++) {
     console.log(network[i] + '/' + type[i] + '--' + encrypted[i] + '//' + qtop[i] + '/' + qbot[i] + '||' + dbm[i]);
+    var val = qtop[i]/qbot[i];
+    var obj = { name: network[i], enc: encrypted[i], enc_type: type[i], quality: val, dbm: dbm[i]};
+    jsonarr.push(obj);
     }
+    fs.writeFile('wiconfig',JSON.stringify(jsonarr));
+
 });
 
 netlist.stderr.on('data', function (data) {
