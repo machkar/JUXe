@@ -1,5 +1,8 @@
+var wcardn = 'wlp3s0';
+//var wcardn = 'wlan0';
+
 var spawn = require('child_process').spawn,
-    netlist = spawn('iwlist',['wlp3s0','s']);
+    netlist = spawn('iwlist',[wcardn,'s']);
     //netlist = spawn('iwlist', ['wlp3s0', 's']);
 
 
