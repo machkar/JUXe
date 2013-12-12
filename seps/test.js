@@ -48,7 +48,7 @@ netlist.stdout.on('data', function (data) {
      * MAKE SURE NETWORKING IS OFF AND NETWORK MANAGER IS OFF, also need to be root
      * if (WPA) {
      * wpa_passphrase ESSID password > wpa.conf
-     * wpa_supplicant -iwlan0 -c./wpa.conf -Dwext
+     * wpa_supplicant -iwlan0 -cwpa.conf -Dwext
      * dhclient wlan0 }
      * else {
      *  if (encrypted == 0)
@@ -61,7 +61,7 @@ netlist.stdout.on('data', function (data) {
     var jsonarr = [];
     for (i=0; i<myi+1; i++) {
     console.log(network[i] + '/' + type[i] + '--' + encrypted[i] + '//' + qtop[i] + '/' + qbot[i] + '||' + dbm[i]);
-    var val = qtop[i]/qbot[i];
+    var val = Math.round(qtop[i]*100/qbot[i]);
     var obj = { name: network[i], enc: encrypted[i], enc_type: type[i], quality: val, dbm: dbm[i]};
     jsonarr.push(obj);
     }
