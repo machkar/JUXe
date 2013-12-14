@@ -10,6 +10,6 @@ sudo mv /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf-bak
 sudo cp ./hotspot/dhcpd.conf /etc/dhcp/dhcpd.conf
 sudo service networking restart
 sudo hostapd /etc/hostapd/hostapd.conf &
-sudo ifconfig wlan0 10.5.5.1
+sudo ip addr add 10.5.5.1 dev wlam0
 sleep 2
 sudo service isc-dhcp-server start
