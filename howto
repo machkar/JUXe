@@ -1,0 +1,17 @@
+#update raspbian
+sudo apt-get upgrade; 
+sudo apt-get update
+
+#extract node and copy it
+tar xzvf node-v0.11.9-linux-arm-pi.tar.gz
+sudo mkdir /opt/node
+sudo cp -r node-v0.11.9-linux-arm-pi/* /opt/node 
+
+sudo vim /etc/profile
+#add
+NODE_JS_HOME="/opt/node"
+PATH="$PATH:$NODE_JS_HOME/bin"
+
+#install server
+sudo apt-get install lighttpd
+
