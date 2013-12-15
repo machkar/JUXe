@@ -1,0 +1,29 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          network-start
+# Required-Start:    
+# Required-Stop:     
+# Should-Start:      $all
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start networking capabilities of PI
+# Description:       Controls the ability to run hotspot or connect to wifi on boot
+### END INIT INFO
+
+PI_LOC=/home/pi
+PATH_NETWORK=$PI_LOC/network-config
+WIFI_SCRIPTS=$PI_LOC/wifi-setup
+ESSID=$PATH_NETWORK/network-name
+PASS=$PATH_NETWORK/network-pass
+essid_var=$(cat $ESSID)
+pass_var=$(cat $PASS)
+last_var=$(iwlist wlan0 s | grep ESSID:\"$essid_var\")
+if [ -z "$last_var" ]; then
+sudo $WIFI_SCRIPTS/disc.sh
+sudo $WIFI_SCRIPTS/runhotspot.sh
+else
+sudo $WIFI_SCRIPTS/disc.sh
+sudo $WIFI_SCRIPTS/revert.sh
+sudo $WIFI_SCRIPTS/connect.sh $essid_var $pass_var
+fi
