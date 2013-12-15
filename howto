@@ -15,3 +15,5 @@ PATH="$PATH:$NODE_JS_HOME/bin"
 #install server
 sudo apt-get install lighttpd
 
+sudo cp network-start /etc/init.d/network-start
+sudo update-rc.d network-start defaults
