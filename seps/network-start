@@ -16,8 +16,10 @@ PATH_NETWORK=$PI_LOC/network-config
 WIFI_SCRIPTS=$PI_LOC/wifi-setup
 ESSID=$PATH_NETWORK/network-name
 PASS=$PATH_NETWORK/network-pass
+ENC=$PATH_NETWORK/network-enc
 essid_var=$(cat $ESSID)
 pass_var=$(cat $PASS)
+enc_var=$(cat $ENC)
 last_var=$(iwlist wlan0 s | grep ESSID:\"$essid_var\")
 if [ -z "$last_var" ]; then
 sudo $WIFI_SCRIPTS/disc.sh
@@ -25,5 +27,5 @@ sudo $WIFI_SCRIPTS/runhotspot.sh
 else
 sudo $WIFI_SCRIPTS/disc.sh
 sudo $WIFI_SCRIPTS/revert.sh
-sudo $WIFI_SCRIPTS/connect.sh $essid_var $pass_var
+sudo $WIFI_SCRIPTS/connect.sh $enc_var $essid_var $pass_var
 fi
